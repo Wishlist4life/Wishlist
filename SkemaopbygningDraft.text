@@ -1,0 +1,70 @@
+-------------------------------------
+users (Bruger-tabel)
+Holder styr på dem, der opretter en profil.
+
+id (PK, Long, Auto Increment)
+
+name (VARCHAR)
+
+email (VARCHAR, Unique)
+
+password (VARCHAR - den hashede kode)
+-------------------------------------
+
+-------------------------------------
+wishlists (Ønskeliste-tabel)
+Gør det muligt for en bruger at have flere lister (f.eks. "Fødselsdag" og "Jul").
+
+id (PK, Long, Auto Increment)
+
+user_id (FK der peget på users.id - hvem ejer listen?)
+
+title (VARCHAR - f.eks. "Fødselsdag 2026")
+
+share_token (VARCHAR- et unikt, tilfældigt string/UUID til delingslinket, f.eks. a3f8-c92b...)
+-------------------------------------
+
+-------------------------------------
+wishes (Ønske-tabel)
+Selve ønskerne, der hører til en ønskeliste.
+
+id (PK, Long, Auto Increment)
+
+wishlist_id (FK der peget på wishlists.id - hvilken liste hører ønsket til?)
+
+title (VARCHAR - f.eks. "Kaffemaskine")
+
+description (TEXT - valgfri)
+
+price (DECIMAL - valgfri)
+
+url (VARCHAR - link til webshop)
+
+image_url (VARCHAR - billede)
+-------------------------------------
+
+-------------------------------------
+reservations (Join-tabel / Reserverings-tabel)
+Dette er din join-tabel, som forbinder den bruger, der reserverer, med det ønske der bliver reserveret.
+
+id (PK, Long, Auto Increment)
+
+wish_id (FK der peget på wishes.id)
+
+user_id (FK der peget på users.id - hvem har reserveret gaven?)
+
+reserved_at (TIMESTAMP - hvornår blev den reserveret)
+
+(Bemærk: Du kan også sætte en UNIQUE-constraint på wish_id i denne tabel, hvis et ønske kun kan reserveres af én person og ikke kan deles).
+-------------------------------------
+
+-------------------------------------
+Entity-relationer i Java (JPA / Hibernate)
+Når du opsætter dette med Spring Data JPA, vil dine entiteter se nogen lunde sådan ud (forenklet):
+
+User har en One-to-Many relation til Wishlist.
+
+Wishlist har en Many-to-One relation til User, og en One-to-Many relation til Wish.
+
+Wish har en Many-to-One relation til Wishlist, og en One-to-One (eller Many-to-One) relation til en Reservation.
+-------------------------------------
