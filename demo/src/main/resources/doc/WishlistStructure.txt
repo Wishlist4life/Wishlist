@@ -1,0 +1,48 @@
+Wishlist
+│
+├──Controller
+│   └── WishController.java
+│
+├──Model
+│   ├── Wish.java
+│   └── User.java
+│
+├── Exception
+│   ├── dublicateUser.java
+│   ├── dublicateEmail.java
+│   ├── SqlStuff.java
+│   └── otherShit.java
+│
+├── service
+│   └── WishService.java
+│
+├── WishReposity
+│   └── WishRepository.java
+│
+├── resources/
+│    ├── data.sql
+│    └── schema.sql
+|
+├── resources/css/
+│    ├── theme.css
+│    └── navbar.css
+|
+├── resources/doc
+|   ├── ER-Diagram.png
+|   ├── Klasse-Diagram.png
+|   └── Qodana.png
+|
+├──resources/templates/
+│   ├── wishlist.html
+│   ├── index.html
+│   └── userform.html
+│
+├── resources/static/images
+│    ├── testtoy.png
+│    └── testjacket.png
+|
+
+|
+
+│
+└
