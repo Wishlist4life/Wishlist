@@ -14,7 +14,7 @@ public class GlobalExceptionHandler {
     public String profileNotFound(ProfileDontExist pde, Model model){
         model.addAttribute("status", HttpStatus.NOT_FOUND.value());
         model.addAttribute("error", HttpStatus.NOT_FOUND.getReasonPhrase());
-        model.addAttribute("message", pde.getMessage());
+        model.addAttribute("message", pde.getMessage()); //forskel på getmsg og getlocalized?
         return "error/404"
     }
 
@@ -23,7 +23,7 @@ public class GlobalExceptionHandler {
     public String handleDatabaseOperation(DatabaseExceptionHandler dbe, Model model) {
         model.addAttribute("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
         model.addAttribute("error", HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
-        model.addAttribute("message", dbe.getLocalizedMessage());
+        model.addAttribute("message", dbe.getLocalizedMessage()); //forskel på getmsg og getlocalized bibop
         return "error/500";
     }
 
