@@ -35,6 +35,7 @@ Brug små bogstaver og bindestreger. Undgå æ, ø og å i branch-navne.
 - Skriv `Closes #<nr>` i beskrivelsen, så issuet lukkes automatisk ved merge.
 - Hold PR'er små – helst én task pr. PR.
 - Reviewer: tjek at koden virker, er testet og følger strukturen nedenfor.
+- Tilføjet en DEVELOPMENT BRANCH før `main`
 
 ## Kodestruktur
 
