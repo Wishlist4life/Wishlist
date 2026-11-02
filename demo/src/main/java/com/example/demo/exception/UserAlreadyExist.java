@@ -5,6 +5,6 @@ public class UserAlreadyExist extends RuntimeException {
         super(message, cause);
     }
 
-    //use for both email/whatever unique datasat vi bruger
+    //use for both name/email unique datasat vi bruger
 
 }
