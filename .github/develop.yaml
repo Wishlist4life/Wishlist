@@ -1,0 +1,10 @@
+   name: enforce-source-branch
+   on:
+     pull_request:
+       branches: [main]
+   jobs:
+     check:
+       runs-on: ubuntu-latest
+       steps:
+         - if: github.head_ref != 'develop' && !startsWith(github.head_ref, 'hotfix/')
+           run: echo "PR til main skal komme fra develop" && exit 1
