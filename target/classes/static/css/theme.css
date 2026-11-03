@@ -1,1 +1,238 @@
 /* theme.css - global theme */
+/* theme.css - global theme + forside
+   Ligger i src/main/resources/static/css/ og hentes med th:href="@{/css/theme.css}" */
+
+:root {
+    --bg: #F1EFFB;
+    --surface: #FFFFFF;
+    --ink: #231942;
+    --muted: #5B5675;
+    --line: #DDD8F0;
+    --accent: #C2255C;
+    --accent-dark: #A31D4C;
+    --teal: #0B7A6F;
+    --teal-soft: #DDF3F0;
+
+    --font-head: "Bricolage Grotesque", "Trebuchet MS", system-ui, sans-serif;
+    --font-body: "Source Sans 3", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+    --radius: 10px;
+    --max: 1080px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+}
+
+h1, h2, h3 {
+    font-family: var(--font-head);
+    line-height: 1.12;
+    margin: 0;
+}
+
+p { margin: 0; }
+
+a { color: inherit; }
+
+:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+}
+
+/* ---------- Knapper ---------- */
+.btn {
+    display: inline-block;
+    padding: 0.8rem 1.4rem;
+    background: var(--accent);
+    color: #FFFFFF;
+    border: 2px solid var(--accent);
+    border-radius: var(--radius);
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+.btn:hover { background: var(--accent-dark); border-color: var(--accent-dark); }
+
+.btn--small { padding: 0.45rem 1rem; font-size: 0.95rem; }
+
+.btn--ghost {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--ink);
+}
+.btn--ghost:hover { background: var(--ink); border-color: var(--ink); color: #FFFFFF; }
+
+.btn--light { background: #FFFFFF; color: var(--ink); border-color: #FFFFFF; }
+.btn--light:hover { background: var(--bg); border-color: var(--bg); }
+
+/* ---------- Navbar ---------- */
+.site-header { border-bottom: 1px solid var(--line); background: var(--bg); }
+
+.nav {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav__brand {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 1.5rem;
+    text-decoration: none;
+}
+
+.nav__links { display: flex; align-items: center; gap: 1.25rem; }
+.nav__link { text-decoration: none; font-weight: 600; }
+.nav__link:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+/* ---------- Hero ---------- */
+.hero {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 4.5rem 1.5rem 5rem;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 3.5rem;
+    align-items: center;
+}
+
+.hero__title {
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.hero__lead {
+    margin-top: 1.25rem;
+    max-width: 34rem;
+    color: var(--muted);
+    font-size: 1.15rem;
+}
+
+.hero__actions { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+/* ---------- Ønskeseddel (hero-kort) ---------- */
+.paper {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: 0 18px 40px -18px rgba(35, 25, 66, 0.35);
+    transform: rotate(-1.6deg);
+    overflow: hidden;
+}
+
+.paper__top {
+    padding: 1.25rem 1.5rem 1rem;
+    border-top: 8px solid var(--accent);
+    border-bottom: 2px dashed var(--line);
+}
+
+.paper__title { font-family: var(--font-head); font-weight: 800; font-size: 1.35rem; }
+.paper__meta { color: var(--muted); font-size: 0.95rem; }
+
+.paper__list { list-style: none; margin: 0; padding: 0.5rem 0; }
+
+.wish {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.85rem 1.5rem;
+    border-bottom: 1px solid var(--line);
+}
+.wish:last-child { border-bottom: 0; }
+
+.wish__name { font-weight: 600; }
+.wish__price { color: var(--muted); white-space: nowrap; }
+
+.wish--reserved .wish__name { color: var(--muted); text-decoration: line-through; }
+
+.badge {
+    background: var(--teal-soft);
+    color: var(--teal);
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.15rem 0.7rem;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+/* ---------- Sådan virker det ---------- */
+.steps {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 1rem 1.5rem 5rem;
+}
+
+.section-title { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; }
+
+.steps__list {
+    list-style: none;
+    margin: 2rem 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    counter-reset: step;
+}
+
+.step { counter-increment: step; border-top: 3px solid var(--ink); padding-top: 1rem; }
+
+.step::before {
+    content: counter(step);
+    display: block;
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 2rem;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+}
+
+.step__title { font-size: 1.25rem; font-weight: 600; }
+.step__text { margin-top: 0.5rem; color: var(--muted); max-width: 26rem; }
+
+/* ---------- Afslutning ---------- */
+.cta {
+    background: var(--ink);
+    color: #FFFFFF;
+    padding: 3.5rem 1.5rem;
+    text-align: center;
+}
+.cta__title { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; margin-bottom: 1.5rem; }
+
+/* ---------- Footer ---------- */
+.site-footer {
+    padding: 1.5rem;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+/* ---------- Responsivt ---------- */
+@media (max-width: 800px) {
+    .hero { grid-template-columns: 1fr; gap: 3rem; padding-top: 3rem; padding-bottom: 3.5rem; }
+    .steps__list { grid-template-columns: 1fr; gap: 1.75rem; }
+    .paper { transform: none; }
+}
+
+@media (max-width: 420px) {
+    .nav__link { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+}
