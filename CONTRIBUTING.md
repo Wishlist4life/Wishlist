@@ -59,7 +59,7 @@ Controllere kalder services, services kalder repositories – aldrig på tværs 
 Kør alle tests lokalt før du pusher:
 
 ```bash
-mvn verify -f demo/pom.xml
+mvn verify
 ```
 
 ## Definition of Done
