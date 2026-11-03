@@ -1,3 +1,4 @@
+
 package org.example.wishlist2.service;
 
 import org.example.wishlist2.Model.User;
@@ -104,3 +105,4 @@ public class WishlistService {
     }// Overkill for vores test ^^ måske bare disable?
 
 }
+
