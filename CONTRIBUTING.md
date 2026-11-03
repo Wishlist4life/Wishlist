@@ -35,6 +35,7 @@ Brug små bogstaver og bindestreger. Undgå æ, ø og å i branch-navne.
 - Skriv `Closes #<nr>` i beskrivelsen, så issuet lukkes automatisk ved merge.
 - Hold PR'er små – helst én task pr. PR.
 - Reviewer: tjek at koden virker, er testet og følger strukturen nedenfor.
+- Tilføjet en DEVELOPMENT BRANCH før `main`
 
 ## Kodestruktur
 
@@ -58,7 +59,7 @@ Controllere kalder services, services kalder repositories – aldrig på tværs 
 Kør alle tests lokalt før du pusher:
 
 ```bash
-mvn verify -f demo/pom.xml
+mvn verify
 ```
 
 ## Definition of Done
