@@ -1,42 +1,36 @@
 --User table draft
+--Bcrypt hash er altid 60 tegn
+CREATE TABLE `world`.`users`
+(
+  `user_id` INT NOT NULL AUTO_INCREMENT,
+  `user_name` VARCHAR(255) NOT NULL,
+  `user_email` VARCHAR(255) NOT NULL,
+  `user_password` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE INDEX `user_email_UNIQUE` (`user_email` ASC) VISIBLE
+);
 
-CREATE TABLE IF NOT EXISTS users (
-    users_id LONG NOT NULL AUTO_INCREMENT,
-    users_name VARCHAR(255) NOT NULL,
-    users_email VARCHAR(255) NOT NULL,
-    users_password VARCHAR(255) NOT NULL,
-    PRIMARY KEY (users_id),
-    CONSTRAINT uq_users_email UNIQUE (users_email)
-    );
+--wish table
+CREATE TABLE `world`.`wish`
+(
+  `wish_id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT,
+  `name` VARCHAR(255) NOT NULL,
+  `description` VARCHAR(255),
+  `price` DECIMAL(10,2),
+  `link` VARCHAR(255),
+  PRIMARY KEY (`wish_id`),
+  FOREIGN KEY (`user_id`) REFERENCES `world`.`users` (`user_id`)
+);
 
-CREATE TABLE IF NOT EXISTS wishlists (
-    wishlist_id LONG NOT NULL AUTO_INCREMENT,
-    users_id LONG NOT NULL,
-    wishlist_title VARCHAR(255) NOT NULL,
-    share_url VARCHAR(255) NOT NULL,
-    PRIMARY KEY (wishlist_id),
-    CONSTRAINT uq_users_id FOREIGN KEY (users_id) REFERENCES users (users_id)
-    );
-
-CREATE TABLE IF NOT EXISTS wishes (
-    wishes_id LONG NOT NULL AUTO_INCREMENT,
-    wishlist_id LONG NOT NULL,
-    wishes_title VARCHAR(255) NOT NULL,
-    wishes_description VARCHAR(255) NOT NULL,
-    wishes_img_path VARCHAR(255) NOT NULL,
-    PRIMARY KEY (wishes_id),
-    CONSTRAINT uq_wishlist_id FOREIGN KEY (wishlist_id) REFERENCES wishlists (wishlist_id)
-    );
-
--- meget af dette er overkill, skulle vi simplificere?
---User kan kun reservere hvis de har en bruger, er det en dårlig ide?
-
-    CREATE TABLE IF NOT EXISTS reservations (
-      reservations_id LONG NOT NULL AUTO_INCREMENT,
-      wishes_id LONG NOT NULL,
-      user_id LONG NOT NULL,
-      reservations_reserved TIMESTAMP NOT NULL,
-      PRIMARY KEY (reservations_id),
-      CONSTRAINT uq_wishes_id FOREIGN KEY (wishes_id) REFERENCES wishes (wishes_id)
-      CONSTRAINT uq_user_id FOREIGN KEY (user_id) REFERENCES users (users_id)
-      );
+--Wishlist
+CREATE TABLE `world`.`wishlist`
+(
+  `wishlist_id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT,
+  `name` VARCHAR(255) NOT NULL,
+  `description` VARCHAR(255),
+  `sharetoken` VARCHAR(255) NOT NULL UNIQUE,
+  PRIMARY KEY (`wishlist_id`),
+  FOREIGN KEY (`user_id`) REFERENCES `world`.`users` (`user_id`)
+);
