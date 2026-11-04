@@ -1,11 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Opret bruger | Wishlist')}"></head>
 <body>
-    
+<header th:replace="~{fragments :: nav}"></header>
+
+<main class="page page--narrow">
+    <h1 class="page__title">Opret bruger</h1>
+    <p class="page__lead">Det tager under et minut.</p>
+
+    <p class="alert alert--error" th:if="${error}" th:text="${error}" role="alert">Fejl</p>
+
+    <form class="card form" th:action="@{/register}" method="post">
+        <div class="field">
+            <label for="name">Navn</label>
+            <input id="name" name="name" type="text" maxlength="100" autocomplete="name" required="required"
+                   th:value="${name}" autofocus="autofocus"/>
+        </div>
+        <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" maxlength="100" autocomplete="email" required="required"
+                   th:value="${email}"/>
+        </div>
+        <div class="field">
+            <label for="password">Kodeord</label>
+            <input id="password" name="password" type="password" minlength="8" maxlength="72"
+                   autocomplete="new-password" required="required"/>
+            <span class="field__hint">Mindst 8 tegn, med mindst ét bogstav og ét tal.</span>
+        </div>
+        <button type="submit" class="btn">Opret bruger</button>
+    </form>
+
+    <p class="auth-switch">Har du allerede en bruger? <a th:href="@{/login}">Log ind</a></p>
+</main>
+
+<footer th:replace="~{fragments :: footer}"></footer>
 </body>
 </html>

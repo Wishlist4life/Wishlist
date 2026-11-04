@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head(${wishlist.name} + ' | Wishlist')}"></head>
+<body>
+<header th:replace="~{fragments :: nav}"></header>
+
+<main class="page">
+    <p><a th:href="@{/wishlists}">← Mine ønskesedler</a></p>
+    <h1 class="page__title" th:text="${wishlist.name}">Navn</h1>
+    <p class="page__lead" th:if="${wishlist.description != null}" th:text="${wishlist.description}">Beskrivelse</p>
+
+    <p class="alert alert--error" th:if="${error}" th:text="${error}" role="alert">Fejl</p>
+
+    <section class="card">
+        <h2 class="card__title">Del din ønskeseddel</h2>
+        <p class="list__meta">Send linket til familie og venner. De kan se listen og reservere ønsker.</p>
+        <div class="field share-box">
+            <label for="shareUrl" class="visually-hidden">Delingslink</label>
+            <input id="shareUrl" type="text" readonly="readonly" th:value="${shareUrl}"/>
+        </div>
+    </section>
+
+    <section class="card card--flush">
+        <h2 class="card__title card__title--padded">Ønsker</h2>
+        <p th:if="${#lists.isEmpty(wishes)}" class="list__meta card__empty">Der er ingen ønsker endnu. Tilføj det første herunder.</p>
+        <ul class="paper__list" th:unless="${#lists.isEmpty(wishes)}">
+            <li class="wish" th:each="wish : ${wishes}">
+                <div class="wish__main">
+                    <span class="wish__name">
+                        <a th:if="${wish.link != null}" th:href="${wish.link}" th:text="${wish.name}"
+                           target="_blank" rel="noopener noreferrer">Navn</a>
+                        <span th:if="${wish.link == null}" th:text="${wish.name}">Navn</span>
+                    </span>
+                    <p class="wish__desc" th:if="${wish.description != null}" th:text="${wish.description}">Beskrivelse</p>
+                </div>
+                <div class="wish__actions">
+                    <span class="wish__price" th:if="${wish.price != null}"
+                          th:text="${#numbers.formatDecimal(wish.price, 1, 'POINT', 2, 'COMMA')} + ' kr.'">349,00 kr.</span>
+                    <form class="inline-form" method="post"
+                          th:action="@{/wishlists/{id}/wishes/{wishId}/delete(id=${wishlist.id}, wishId=${wish.id})}">
+                        <button type="submit" class="btn btn--small btn--danger">Slet</button>
+                    </form>
+                </div>
+            </li>
+        </ul>
+    </section>
+
+    <section class="card">
+        <h2 class="card__title">Tilføj ønske</h2>
+        <form class="form" method="post" th:action="@{/wishlists/{id}/wishes(id=${wishlist.id})}">
+            <div class="field">
+                <label for="name">Navn</label>
+                <input id="name" name="name" type="text" maxlength="255" required="required"/>
+            </div>
+            <div class="field">
+                <label for="description">Beskrivelse (valgfri)</label>
+                <input id="description" name="description" type="text" maxlength="255"/>
+            </div>
+            <div class="field">
+                <label for="price">Pris i kr. (valgfri)</label>
+                <input id="price" name="price" type="text" inputmode="decimal" placeholder="fx 349 eller 349,50"/>
+            </div>
+            <div class="field">
+                <label for="link">Link til butik (valgfri)</label>
+                <input id="link" name="link" type="text" maxlength="255" placeholder="https://..."/>
+            </div>
+            <button type="submit" class="btn">Tilføj ønske</button>
+        </form>
+    </section>
+
+    <section class="card">
+        <h2 class="card__title">Slet ønskeseddel</h2>
+        <p class="list__meta">Sletter ønskesedlen og alle dens ønsker. Det kan ikke fortrydes.</p>
+        <form class="form" method="post" th:action="@{/wishlists/{id}/delete(id=${wishlist.id})}">
+            <button type="submit" class="btn btn--danger">Slet ønskeseddel</button>
+        </form>
+    </section>
+</main>
+
+<footer th:replace="~{fragments :: footer}"></footer>
+</body>
+</html>

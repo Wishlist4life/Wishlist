@@ -1,11 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Mine ønskesedler | Wishlist')}"></head>
 <body>
-    
+<header th:replace="~{fragments :: nav}"></header>
+
+<main class="page">
+    <h1 class="page__title">Mine ønskesedler</h1>
+    <p class="page__lead">Hej <span th:text="${userName}">Navn</span>. Her er dine ønskesedler.</p>
+
+    <p class="alert alert--error" th:if="${error}" th:text="${error}" role="alert">Fejl</p>
+
+    <section class="card">
+        <h2 class="card__title">Ny ønskeseddel</h2>
+        <form class="form" th:action="@{/wishlists}" method="post">
+            <div class="field">
+                <label for="name">Navn</label>
+                <input id="name" name="name" type="text" maxlength="255" required="required"
+                       placeholder="fx Min fødselsdag"/>
+            </div>
+            <div class="field">
+                <label for="description">Beskrivelse (valgfri)</label>
+                <input id="description" name="description" type="text" maxlength="255"/>
+            </div>
+            <button type="submit" class="btn">Opret ønskeseddel</button>
+        </form>
+    </section>
+
+    <section class="card">
+        <h2 class="card__title">Dine ønskesedler</h2>
+        <p th:if="${#lists.isEmpty(wishlists)}" class="list__meta">Du har ikke oprettet nogen ønskesedler endnu.</p>
+        <ul class="list" th:unless="${#lists.isEmpty(wishlists)}">
+            <li class="list__item" th:each="w : ${wishlists}">
+                <div class="list__main">
+                    <a class="list__name" th:href="@{/wishlists/{id}(id=${w.id})}" th:text="${w.name}">Navn</a>
+                    <p class="list__meta" th:if="${w.description != null}" th:text="${w.description}">Beskrivelse</p>
+                </div>
+                <a class="btn btn--small btn--ghost" th:href="@{/wishlists/{id}(id=${w.id})}">Åbn</a>
+            </li>
+        </ul>
+    </section>
+</main>
+
+<footer th:replace="~{fragments :: footer}"></footer>
 </body>
 </html>

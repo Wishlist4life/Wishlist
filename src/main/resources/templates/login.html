@@ -1,11 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Log ind | Wishlist')}"></head>
 <body>
-    
+<header th:replace="~{fragments :: nav}"></header>
+
+<main class="page page--narrow">
+    <h1 class="page__title">Log ind</h1>
+    <p class="page__lead">Log ind for at se og redigere dine ønskesedler.</p>
+
+    <p class="alert alert--error" th:if="${param.error}" role="alert">Forkert email eller kodeord.</p>
+    <p class="alert alert--ok" th:if="${param.registered}" role="status">Din bruger er oprettet. Du kan nu logge ind.</p>
+
+    <form class="card form" th:action="@{/login}" method="post">
+        <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required="required" autofocus="autofocus"/>
+        </div>
+        <div class="field">
+            <label for="password">Kodeord</label>
+            <input id="password" name="password" type="password" autocomplete="current-password" required="required"/>
+        </div>
+        <button type="submit" class="btn">Log ind</button>
+    </form>
+
+    <p class="auth-switch">Har du ikke en bruger? <a th:href="@{/register}">Opret bruger</a></p>
+</main>
+
+<footer th:replace="~{fragments :: footer}"></footer>
 </body>
 </html>

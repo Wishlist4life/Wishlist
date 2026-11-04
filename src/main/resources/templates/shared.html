@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head(${wishlist.name} + ' | Wishlist')}"></head>
+<body>
+<header th:replace="~{fragments :: nav}"></header>
+
+<main class="page">
+    <h1 class="page__title" th:text="${wishlist.name}">Navn</h1>
+    <p class="page__lead">Ønskeseddel fra <strong th:text="${ownerName}">Navn</strong></p>
+    <p class="list__meta" th:if="${wishlist.description != null}" th:text="${wishlist.description}">Beskrivelse</p>
+
+    <p class="alert alert--error" th:if="${error}" th:text="${error}" role="alert">Fejl</p>
+    <p class="alert alert--ok" th:if="${isOwner}" role="status">
+        Det er din egen ønskeseddel. Du kan ikke se eller ændre reservationer her.
+    </p>
+    <p class="alert alert--ok" th:unless="${loggedIn or isOwner}" role="status">
+        <a th:href="@{/login}">Log ind</a> eller <a th:href="@{/register}">opret en bruger</a> for at reservere et ønske.
+    </p>
+
+    <section class="card card--flush">
+        <p th:if="${#lists.isEmpty(wishes)}" class="list__meta card__empty">Der er ingen ønsker på listen endnu.</p>
+        <ul class="paper__list" th:unless="${#lists.isEmpty(wishes)}">
+            <li class="wish" th:each="wish : ${wishes}" th:classappend="${wish.reserved and !isOwner} ? 'wish--reserved'">
+                <div class="wish__main">
+                    <span class="wish__name">
+                        <a th:if="${wish.link != null}" th:href="${wish.link}" th:text="${wish.name}"
+                           target="_blank" rel="noopener noreferrer">Navn</a>
+                        <span th:if="${wish.link == null}" th:text="${wish.name}">Navn</span>
+                    </span>
+                    <p class="wish__desc" th:if="${wish.description != null}" th:text="${wish.description}">Beskrivelse</p>
+                </div>
+                <div class="wish__actions">
+                    <span class="wish__price" th:if="${wish.price != null}"
+                          th:text="${#numbers.formatDecimal(wish.price, 1, 'POINT', 2, 'COMMA')} + ' kr.'">349,00 kr.</span>
+
+                    <!-- Ejeren ser aldrig reservationer (så gaven er en overraskelse) -->
+                    <th:block th:unless="${isOwner}">
+                        <span class="badge" th:if="${wish.reserved and wish.reservedBy != currentUserId}">Reserveret</span>
+
+                        <form class="inline-form" method="post" th:if="${wish.reserved and wish.reservedBy == currentUserId}"
+                              th:action="@{/share/{token}/wishes/{wishId}/unreserve(token=${wishlist.shareToken}, wishId=${wish.id})}">
+                            <span class="badge">Reserveret af dig</span>
+                            <button type="submit" class="btn btn--small btn--ghost">Fortryd</button>
+                        </form>
+
+                        <form class="inline-form" method="post" th:if="${!wish.reserved and loggedIn}"
+                              th:action="@{/share/{token}/wishes/{wishId}/reserve(token=${wishlist.shareToken}, wishId=${wish.id})}">
+                            <button type="submit" class="btn btn--small">Reserver</button>
+                        </form>
+                    </th:block>
+                </div>
+            </li>
+        </ul>
+    </section>
+</main>
+
+<footer th:replace="~{fragments :: footer}"></footer>
+</body>
+</html>

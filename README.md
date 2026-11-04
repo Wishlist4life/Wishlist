@@ -27,8 +27,10 @@ Java 21 · Spring Boot · Thymeleaf · MySQL · Azure App Service · GitHub Acti
 
 ## Database
 SQL-scripts ligger i `src/main/resources`:
-- `schema.sql` – opretter database og tabeller
-- `data.sql` – indsætter testdata
+- `schema.sql` – opretter tabellerne (`users`, `wishlist`, `wish`, `reservation`)
+- `data.sql` – indsætter testdata (login: `mia@test.dk` / `Test1234`). Kør den kun én gang mod MySQL.
+
+Mod Azure MySQL køres begge scripts manuelt i databasen `wishlist`. I tests (H2) køres de automatisk.
 
 Databasen kører på Azure. Forbindelsesoplysninger håndteres via miljøvariabler i Azure og GitHub Secrets.
 

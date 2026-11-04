@@ -1,26 +1,9 @@
 <!DOCTYPE html>
 <html lang="da" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Wishlist | Din digitale ønskeseddel</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/theme.css">
-</head>
+<head th:replace="~{fragments :: head('Wishlist | Din digitale ønskeseddel')}"></head>
 <body>
 
-<header class="site-header">
-    <nav class="nav" aria-label="Hovedmenu">
-        <a class="nav__brand" th:href="@{/}">Wishlist</a>
-        <div class="nav__links">
-            <a class="nav__link" th:href="@{/login}">Log ind</a>
-            <a class="btn btn--small" th:href="@{/register}">Opret bruger</a>
-        </div>
-    </nav>
-</header>
+<header th:replace="~{fragments :: nav}"></header>
 
 <main>
     <section class="hero">
@@ -30,9 +13,12 @@
                 Lav en ønskeseddel, send linket til familie og venner, og lad dem reservere de ønsker,
                 de vil give. Så undgår I at få den samme gave to gange.
             </p>
-            <div class="hero__actions">
+            <div class="hero__actions" th:unless="${loggedIn}">
                 <a class="btn" th:href="@{/register}">Opret din ønskeseddel</a>
                 <a class="btn btn--ghost" th:href="@{/login}">Log ind</a>
+            </div>
+            <div class="hero__actions" th:if="${loggedIn}">
+                <a class="btn" th:href="@{/wishlists}">Gå til mine ønskesedler</a>
             </div>
         </div>
 
@@ -79,13 +65,12 @@
 
     <section class="cta">
         <h2 class="cta__title">Klar til din første ønskeseddel?</h2>
-        <a class="btn btn--light" th:href="@{/register}">Opret bruger</a>
+        <a class="btn btn--light" th:unless="${loggedIn}" th:href="@{/register}">Opret bruger</a>
+        <a class="btn btn--light" th:if="${loggedIn}" th:href="@{/wishlists}">Mine ønskesedler</a>
     </section>
 </main>
 
-<footer class="site-footer">
-    <p>Wishlist4life, et skoleprojekt</p>
-</footer>
+<footer th:replace="~{fragments :: footer}"></footer>
 
 </body>
 </html>
