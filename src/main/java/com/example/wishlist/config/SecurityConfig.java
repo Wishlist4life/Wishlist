@@ -24,7 +24,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/", "/login", "/register", "/error", "/error/**",
                                 "/css/**", "/images/**").permitAll()
-                        // Delt oenskeseddel kan ses uden login. Reservation (POST) kraever login.
+                        // Delt seddel kan ses uden login. Reservation kræver login.
                         .requestMatchers(HttpMethod.GET, "/share/*").permitAll()
                         .anyRequest().authenticated()
                 )

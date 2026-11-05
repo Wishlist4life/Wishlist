@@ -1,5 +1,4 @@
--- Opretter tabellerne. Koeres mod databasen "wishlist" (Azure MySQL). Mod H2 koeres den automatisk i tests.
--- BCrypt-hash er altid 60 tegn.
+-- Opretter tabellerne
 
 CREATE TABLE IF NOT EXISTS users
 (
@@ -35,7 +34,7 @@ CREATE TABLE IF NOT EXISTS wish
     CONSTRAINT fk_wish_wishlist FOREIGN KEY (wishlist_id) REFERENCES wishlist (wishlist_id) ON DELETE CASCADE
 );
 
--- Et oenske kan hoejst reserveres af én bruger (wish_id er UNIQUE)
+-- Et ønske kan kun reserveres én gang
 CREATE TABLE IF NOT EXISTS reservation
 (
     reservation_id INT       NOT NULL AUTO_INCREMENT,

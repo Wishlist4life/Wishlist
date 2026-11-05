@@ -5,7 +5,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-/** Goer "loggedIn" og "currentUserId" tilgaengelige i alle skabeloner (bruges af navbaren). */
+/** loggedIn og currentUserId til alle sider. */
 @ControllerAdvice
 public class GlobalModelAttributes {
 

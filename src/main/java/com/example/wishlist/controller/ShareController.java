@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-/** Delt oenskeseddel: kan ses af alle med linket, men reservation kraever login. */
+/** Delt seddel og reservation. */
 @Controller
 public class ShareController {
 

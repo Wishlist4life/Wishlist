@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-/** Alt der kraever login: egne oenskesedler og oensker. */
+/** Egne ønskesedler og ønsker (kræver login). */
 @Controller
 public class WishlistController {
 

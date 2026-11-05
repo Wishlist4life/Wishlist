@@ -9,7 +9,7 @@ public class Wish {
     private String description;
     private BigDecimal price;
     private String link;
-    /** Id paa den bruger der har reserveret oensket, eller null hvis det er ledigt. */
+    /** Bruger-id på den der har reserveret, ellers null. */
     private Integer reservedBy;
 
     public Wish() {

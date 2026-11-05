@@ -54,7 +54,7 @@ public class WishlistService {
         return user;
     }
 
-    /** Bruges af login. Returnerer null hvis emailen ikke findes. */
+    /** Til login. Returnerer null, hvis emailen ikke findes. */
     public User findByEmailForLogin(String email) {
         if (email == null) {
             return null;
@@ -104,8 +104,7 @@ public class WishlistService {
         }
     }
 
-    // A's regex havde en fordoblet backslash (\\\\d) og krævede specialtegn, så den afviste alle kodeord.
-    // Forenklet: 8-72 tegn (72 er BCrypts grænse) med mindst ét bogstav og ét tal.
+    // 8-72 tegn med mindst ét bogstav og ét tal
     private void validatePassword(String password) {
         if (password == null || password.isBlank()) {
             throw new PasswordException("Kodeord skal udfyldes.");
@@ -139,7 +138,7 @@ public class WishlistService {
         return wr.insertWishlist(wishlist);
     }
 
-    /** Henter en oenskeseddel brugeren ejer. Andres lister giver "findes ikke" for ikke at afsloere dem. */
+    /** Henter egen seddel. Andres giver "findes ikke". */
     public Wishlist getOwnWishlist(int wishlistId, int userId) {
         Wishlist wishlist = wr.findWishlistById(wishlistId);
         if (wishlist == null || wishlist.getUserId() != userId) {
@@ -247,7 +246,7 @@ public class WishlistService {
         return trimmed;
     }
 
-    /** Accepterer fx "349", "349.50" og "349,50". Tom pris er tilladt. */
+    /** Tager fx 349, 349.50 og 349,50. Tom pris er ok. */
     private BigDecimal parsePrice(String price) {
         if (price == null || price.isBlank()) {
             return null;
@@ -263,7 +262,7 @@ public class WishlistService {
         }
     }
 
-    /** Kun http/https-links (blokerer fx javascript:-links). Mangler skema, tilfoejes https://. */
+    /** Kun http/https-links. Mangler https://, tilføjes det. */
     private String normalizeLink(String link) {
         if (link == null || link.isBlank()) {
             return null;
