@@ -22,7 +22,7 @@ public class WishRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    // Password hentes bevidst ikke med ud ved almindelige opslag
+    // Uden password
     private final RowMapper<User> userRowMapper = (rs, rowNum) -> {
         User user = new User();
         user.setId(rs.getInt("user_id"));
@@ -31,7 +31,7 @@ public class WishRepository {
         return user;
     };
 
-    // Kun til login: her skal password-hashen med
+    // Med password-hash, kun til login
     private final RowMapper<User> userWithPasswordRowMapper = (rs, rowNum) -> {
         User user = new User();
         user.setId(rs.getInt("user_id"));
@@ -93,7 +93,7 @@ public class WishRepository {
         return results.getFirst();
     }
 
-    /** Bruges af login. Returnerer brugeren inkl. password-hash, eller null. */
+    /** Til login. Returnerer brugeren med hash, eller null. */
     public User findByEmailWithPassword(String email) {
         String sql = """
                 SELECT user_id, user_name, user_email, user_password
@@ -204,9 +204,9 @@ public class WishRepository {
         return wishlist;
     }
 
-    /** Sletter kun hvis oenskesedlen tilhoerer brugeren. Returnerer antal slettede raekker (0 eller 1). */
+    /** Sletter sedlen, hvis brugeren ejer den. Returnerer 0 eller 1. */
     public int deleteWishlist(int wishlistId, int userId) {
-        // Ejerskabet tjekkes i alle tre sletninger, saa en andens liste aldrig roeres
+        // Ejerskab tjekkes i alle tre sletninger
         jdbcTemplate.update("""
                 DELETE FROM reservation
                 WHERE wish_id IN (
@@ -273,7 +273,7 @@ public class WishRepository {
         return wish;
     }
 
-    /** Sletter oensket (og dets reservation) hvis det ligger paa den angivne oenskeseddel. */
+    /** Sletter ønsket og dets reservation. */
     public int deleteWish(int wishId, int wishlistId) {
         jdbcTemplate.update("""
                 DELETE FROM reservation
@@ -284,12 +284,12 @@ public class WishRepository {
 
     // ----------------------------------------------------------- reservations
 
-    /** Kaster DuplicateKeyException hvis oensket allerede er reserveret (wish_id er UNIQUE). */
+    /** Kaster DuplicateKeyException, hvis ønsket allerede er reserveret. */
     public void insertReservation(int wishId, int userId) {
         jdbcTemplate.update("INSERT INTO reservation (wish_id, user_id) VALUES (?, ?)", wishId, userId);
     }
 
-    /** Fjerner kun brugerens egen reservation. Returnerer antal slettede raekker (0 eller 1). */
+    /** Fjerner kun brugerens egen reservation. Returnerer 0 eller 1. */
     public int deleteReservation(int wishId, int userId) {
         return jdbcTemplate.update("DELETE FROM reservation WHERE wish_id = ? AND user_id = ?", wishId, userId);
     }

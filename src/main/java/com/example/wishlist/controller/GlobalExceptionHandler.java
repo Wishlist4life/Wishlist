@@ -31,7 +31,7 @@ public class GlobalExceptionHandler {
         return serverError(dbe.getLocalizedMessage(), model);
     }
 
-    // Ufangede databasefejl: vis en pæn 500-side uden at laekke SQL-detaljer
+    // Databasefejl: 500-side uden SQL-detaljer
     @ExceptionHandler(DataAccessException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String handleDataAccess(DataAccessException ex, Model model) {

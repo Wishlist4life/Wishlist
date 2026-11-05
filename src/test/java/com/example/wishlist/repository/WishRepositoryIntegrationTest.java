@@ -6,6 +6,7 @@ import com.example.wishlist.model.Wishlist;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,8 +20,9 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/** Integrationstest mod H2 (MySQL-mode). schema.sql og data.sql koeres automatisk; hver test rulles tilbage. */
+/** Integrationstest af SQL mod H2. Hver test rulles tilbage. */
 @SpringBootTest
+@ActiveProfiles("h2test")
 @Transactional
 class WishRepositoryIntegrationTest {
 

@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-/** Slaar brugeren op i databasen ved login (erstatter A's hardcodede InMemory-bruger "user"/"password"). */
+/** Henter brugeren fra databasen ved login. */
 @Service
 public class AppUserDetailsService implements UserDetailsService {
 

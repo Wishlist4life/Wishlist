@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-/** Login-siden og registrering. Selve login-POST'en haandteres af Spring Security (se SecurityConfig). */
+/** Login- og registreringsside. Login håndteres af Spring Security. */
 @Controller
 public class AuthController {
 
@@ -41,7 +41,7 @@ public class AuthController {
             service.create(new User(name, email, password));
             return "redirect:/login?registered";
         } catch (UserValidation | EmailException | PasswordException | UserAlreadyExist e) {
-            // Vis formularen igen med fejlen. Kodeordet sendes bevidst ikke tilbage.
+            // Vis formularen igen med fejl, uden kodeord
             model.addAttribute("error", e.getMessage());
             model.addAttribute("name", name);
             model.addAttribute("email", email);

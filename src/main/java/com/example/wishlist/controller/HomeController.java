@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
-// Simpel controller der håndterer GET requests til roden af applikationen og returnerer "index" viewet.
+// Forside
 @Controller
 public class HomeController {
 
