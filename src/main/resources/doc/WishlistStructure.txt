@@ -1,48 +1,84 @@
 Wishlist
 │
-├──Controller
-│   └── WishController.java
+├── .github/workflows/
+│   ├── ci.yml                      # PR til main: build, tests og Qodana
+│   └── main_wishlist4life.yml      # Merge til main: deploy til Azure
 │
-├──Model
-│   ├── Wish.java
-│   └── User.java
+├── docs/
+│   ├── er-diagram.png (+ .mmd)
+│   ├── klassediagram.png (+ .mmd)
+│   ├── heuristisk-evaluering.md
+│   ├── usability-test.md
+│   └── qodana.png
 │
-├── Exception
-│   ├── dublicateUser.java
-│   ├── dublicateEmail.java
-│   ├── SqlStuff.java
-│   └── otherShit.java
+├── src/main/java/com/example/wishlist/
+│   ├── WishlistApplication.java
+│   │
+│   ├── config/
+│   │   ├── SecurityConfig.java           # Login, logout, adgangsregler, BCrypt
+│   │   ├── AppUserDetailsService.java    # Slår brugeren op ved login
+│   │   └── AppUserPrincipal.java         # Den loggede bruger (id + navn)
+│   │
+│   ├── controller/
+│   │   ├── HomeController.java           # Forside
+│   │   ├── AuthController.java           # Login og opret bruger
+│   │   ├── WishlistController.java       # Egne ønskesedler og ønsker
+│   │   ├── ShareController.java          # Delt ønskeseddel og reservation
+│   │   ├── GlobalExceptionHandler.java   # 404- og 500-sider
+│   │   └── GlobalModelAttributes.java    # loggedIn og currentUserId til alle sider
+│   │
+│   ├── model/
+│   │   ├── User.java
+│   │   ├── Wishlist.java
+│   │   └── Wish.java
+│   │
+│   ├── service/
+│   │   └── WishlistService.java          # Forretningslogik og validering
+│   │
+│   ├── repository/
+│   │   └── WishRepository.java           # Al SQL via JdbcTemplate
+│   │
+│   └── exception/
+│       ├── UserAlreadyExist.java
+│       ├── UserNotFound.java
+│       ├── UserValidation.java
+│       ├── EmailException.java
+│       ├── PasswordException.java
+│       ├── WishValidation.java
+│       ├── WishlistNotFound.java
+│       ├── ReservationException.java
+│       └── DatabaseOperationException.java
 │
-├── service
-│   └── WishService.java
+├── src/main/resources/
+│   ├── application.properties    # DB-forbindelse via miljøvariabler
+│   ├── schema.sql                # Opretter tabellerne
+│   ├── data.sql                  # Testdata
+│   │
+│   ├── static/css/
+│   │   ├── theme.css
+│   │   ├── nav.css
+│   │   └── index.css
+│   │
+│   └── templates/
+│       ├── fragments.html        # Fælles head, nav og footer
+│       ├── index.html
+│       ├── login.html
+│       ├── register.html
+│       ├── wishlists.html        # Mine ønskesedler
+│       ├── wishlist.html         # Én ønskeseddel (ejer)
+│       ├── shared.html           # Delt ønskeseddel (gæst)
+│       └── error/
+│           ├── 404.html
+│           └── 500.html
 │
-├── WishReposity
-│   └── WishRepository.java
+├── src/test/
+│   ├── java/com/example/wishlist/
+│   │   ├── WishlistApplicationTests.java
+│   │   ├── service/WishlistServiceTest.java                 # Unittests (Mockito)
+│   │   └── repository/WishRepositoryIntegrationTest.java    # Integrationstests (H2)
+│   └── resources/application.properties                     # H2 til tests
 │
-├── resources/
-│    ├── data.sql
-│    └── schema.sql
-|
-├── resources/css/
-│    ├── theme.css
-│    └── navbar.css
-|
-├── resources/doc
-|   ├── ER-Diagram.png
-|   ├── Klasse-Diagram.png
-|   └── Qodana.png
-|
-├──resources/templates/
-│   ├── wishlist.html
-│   ├── index.html
-│   └── userform.html
-│
-├── resources/static/images
-│    ├── testtoy.png
-│    └── testjacket.png
-|
-
-|
-
-│
-└
+├── pom.xml
+├── qodana.yaml
+├── README.md
+└── CONTRIBUTING.md
